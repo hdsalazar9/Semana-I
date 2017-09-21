@@ -1,0 +1,40 @@
+// Example program
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+int main()
+{
+  int n,m;
+  cin >> n;
+  
+  long costoPiedra[n+1];
+  long long costoPiedraSumado[n+1];
+  
+  costoPiedra[0] = 0;
+  costoPiedraSumado[0] = 0;
+  
+  for(int i=1; i<=n; i++) //input de costos
+  {
+      cin >> costoPiedra[i]; //guardar el costo original
+      costoPiedraSumado[i] = costoPiedraSumado[i-1] + costoPiedra[i]; //el costo sumado el anterior mas el original
+  }
+  
+  sort(costoPiedra,costoPiedra+n);//acomodar costos
+  for(int i=1; i<=n; i++) costoPiedra[i]+=costoPiedra[i-1]; //suma por index
+  
+  cin >> m;
+  long long resultados[m];
+  
+  int type,l,r;
+  for(int i=0; i<m; i++)
+  {
+      cin >> type >> l >> r;
+      
+      resultados[i] = (type < 2) ? (resultados[i] = costoPiedraSumado[r] - costoPiedraSumado[l-1]) : (resultados[i] = costoPiedra[r] - costoPiedra[l-1]);
+  }
+  
+  //desplegar
+  for(int i=0; i<m;i++) cout << resultados[i] << endl;
+  
+}
