@@ -1,0 +1,69 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+bool addToSolution (char solution[26], char caracter, char caracter2, int &cant)
+{
+    if(caracter == caracter2 && solution[(caracter-97)] == ' ') //Si el caracter si funciona en el teclado se guarda
+    {
+        solution[(caracter-97)] = caracter;
+        return true;
+    }
+    if(solution[(caracter-97)] == ' ' && solution[(caracter2-97)] == ' ') //Si son diferentes y no ha habido incidencia
+    {
+        solution[(caracter-97)] = caracter2;
+        solution[(caracter2-97)] = caracter;
+        cant++;
+        return true;
+    }
+    else if(solution[(caracter-97)] == caracter2) //Ya estaba guardada esa incidencia
+    {
+        return true;
+    }
+    else
+    {
+        return false; //Ya estaba guardada pero con otro caracter
+    }
+}
+
+void KeyboardCheck()
+{
+    //Vars
+    string S, T;
+    char solution[26]={' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',};
+    int cant = 0;
+    char cAux , cAux2;
+    //Declarations
+    cin >> S;
+    cin >> T;
+
+    //Coding
+    for(int i=0; i<S.size(); i++)
+    {
+        if(!addToSolution(solution,S[i], T[i], cant))
+        {
+            cout << -1 << endl;
+            return;
+        }
+    }
+
+    //Desplegar answer
+    cout << cant << endl;
+    for(int i=0;i<26;i++)
+    {
+        cAux = solution[i];
+        cAux2 = i+97;
+        if((cAux != cAux2) && (cAux != ' '))
+        {
+            cout << cAux << " " << cAux2 << endl;
+            solution[(cAux-97)] = ' '; //Para que no lo repita
+        }
+    }
+
+}
+
+int main()
+{
+    KeyboardCheck();
+    return 0;
+}
